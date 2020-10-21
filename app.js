@@ -1,4 +1,21 @@
 const apiKey = "5b823175756edca6881486f2a5b1816b";
+const pics = {
+    "snow": "https://images.unsplash.com/photo-1457269449834-928af64c684d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1567&q=80",
+    "rain": "https://images.unsplash.com/photo-1428592953211-077101b2021b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1567&q=80",
+    "shower": "https://images.unsplash.com/photo-1568749060075-55a51f687fa3?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1567&q=80",
+    "drizzle": "https://images.unsplash.com/photo-1576234699886-7eb7f11aecb7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=900&q=60",
+    "cloudy": "https://images.unsplash.com/photo-1594156596782-656c93e4d504?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=975&q=80",
+    "clouds": "https://images.unsplash.com/photo-1594156596782-656c93e4d504?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=975&q=80",
+    "clear": "https://images.unsplash.com/photo-1495511167051-13bb07bde85b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=900&q=60",
+    "sunny": "https://images.unsplash.com/photo-1465577512280-1c2d41a79862?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=900&q=60",
+    "thunder": "https://images.unsplash.com/photo-1461511669078-d46bf351cd6e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80",
+    "storm": "https://images.unsplash.com/photo-1493243350443-9e3048ce7288?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2097&q=80",
+    "extream": "https://images.unsplash.com/photo-1454789476662-53eb23ba5907?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=989&q=80",
+    "mist": "https://images.unsplash.com/photo-1482841628122-9080d44bb807?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1951&q=80",
+    "haze": "https://images.unsplash.com/photo-1517278401293-161e3fffd176?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=900&q=60"
+};
+
+
 window.addEventListener('load', () => {
     let long;
     let lat;
@@ -6,7 +23,17 @@ window.addEventListener('load', () => {
     let temperatureDegree = document.querySelector(".temperature-degree")
     let locationTimezone = document.querySelector(".location-timezone")
 
-
+    function setPic(weatherName) {
+        var keyNames = Object.keys(pics);
+        for (var i in keyNames) {
+            const keyName = keyNames[i];
+            if (weatherName.toLowerCase().includes(keyName.toLowerCase())) {
+                console.log(weatherName)
+                console.log("url(" + pics[keyName] + ")")
+                document.body.style.backgroundImage = "url(" + pics[keyName] + ")";
+            }
+        };
+    };
 
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(position => {
@@ -26,17 +53,18 @@ window.addEventListener('load', () => {
                     const locationName = data.name
                     const summary = data.weather[0].description;
                     const icon = data.weather[0].icon;
-                    const weather = data.weather[0].main;
+                    const weatherName = data.weather[0].main;
 
                     //set DOM Elements from the API
                     temperatureDegree.textContent = temperature;
                     temperatureDescription.textContent = summary;
                     locationTimezone.textContent = data.sys.country
+                    setPic(weatherName)
                     //set Icon
                     // setIcons(icon, )
                 });
 
-                fetch(forcastApi)
+            fetch(forcastApi)
                 .then(response => {
                     return response.json();
                 })
