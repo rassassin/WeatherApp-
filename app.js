@@ -14,7 +14,7 @@ const pics = {
     "mist": "https://images.unsplash.com/photo-1482841628122-9080d44bb807?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1951&q=80",
     "haze": "https://images.unsplash.com/photo-1517278401293-161e3fffd176?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=900&q=60"
 };
-
+const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
 window.addEventListener('load', () => {
     let long;
@@ -22,6 +22,14 @@ window.addEventListener('load', () => {
     let temperatureDescription = document.querySelector(".temperature-description")
     let temperatureDegree = document.querySelector(".temperature-degree")
     let locationTimezone = document.querySelector(".location-timezone")
+    let days = document.querySelectorAll(".day")
+    
+    var now = new Date();
+    for(let i = 1; i < 5; i++){
+        var dayIndex = (now.getDay()+i)%7;
+        days[i].textContent = dayNames[dayIndex];
+    }
+
 
     function setPic(weatherName) {
         var keyNames = Object.keys(pics);
@@ -68,6 +76,23 @@ window.addEventListener('load', () => {
                     })
                     .then(data => {
                         console.log(data)
+                        var iconData = []
+                        for(let i = 0; i<data.list.length; i++){
+                            if(i == 0){
+                                iconData.push(data.list[i]);
+                                continue;
+                            }
+                            if(data.list[i].dt_txt.endsWith("12:00:00")){
+                                iconData.push(data.list[i])
+                            }
+                            if(iconData.length == 5){
+                                break;
+                            }
+                        }
+                        console.log(iconData)
+                        for(let i = 0; i< 5; i++){
+                            days[i].textContent += ` ${iconData[i].main.feels_like}`
+                        }
                     });
             });
         }

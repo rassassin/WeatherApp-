@@ -57,3 +57,23 @@ body {
 .degree-section h2 {
     font-size: 40px;
 }
+
+.date-section {
+    width: 100px;
+    height: 100px;
+    background-color: #090;
+    white-space:nowrap;
+    font-size:0;
+}
+.day {
+    width: 100px;
+    height: 100px;
+    margin: 1em;
+    /* background-color: #ccc; */
+    display:inline-block;
+    *display:inline;/* For IE7 */
+    *zoom:1;/* For IE7 */
+    white-space:normal;
+    font-size:20px;
+    vertical-align:top;
+}
