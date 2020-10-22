@@ -28,50 +28,49 @@ window.addEventListener('load', () => {
         for (var i in keyNames) {
             const keyName = keyNames[i];
             if (weatherName.toLowerCase().includes(keyName.toLowerCase())) {
-                console.log(weatherName)
-                console.log("url(" + pics[keyName] + ")")
                 document.body.style.backgroundImage = "url(" + pics[keyName] + ")";
             }
         };
     };
 
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(position => {
-            long = position.coords.longitude;
-            lat = position.coords.latitude;
+    function getWeather() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(position => {
+                long = position.coords.longitude;
+                lat = position.coords.latitude;
 
-            const proxy = "http://cors-anywhere.herokuapp.com/";
-            const api = `${proxy}api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&appid=${apiKey}&units=metric`
-            const forcastApi = `${proxy}api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${long}&appid=${apiKey}&units=metric`;
+                const api = `http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&appid=${apiKey}&units=metric`
+                const forcastApi = `http://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${long}&appid=${apiKey}&units=metric`;
 
-            fetch(api)
-                .then(response => {
-                    return response.json();
-                })
-                .then(data => {
-                    const temperature = data.main.temp;
-                    const locationName = data.name
-                    const summary = data.weather[0].description;
-                    const icon = data.weather[0].icon;
-                    const weatherName = data.weather[0].main;
+                fetch(api)
+                    .then(response => {
+                        return response.json();
+                    })
+                    .then(data => {
+                        const temperature = data.main.temp;
+                        const locationName = data.name
+                        const summary = data.weather[0].description;
+                        const icon = data.weather[0].icon;
+                        const weatherName = data.weather[0].main;
 
-                    //set DOM Elements from the API
-                    temperatureDegree.textContent = temperature;
-                    temperatureDescription.textContent = summary;
-                    locationTimezone.textContent = data.sys.country
-                    setPic(weatherName)
-                    //set Icon
-                    // setIcons(icon, )
-                });
+                        //set DOM Elements from the API
+                        temperatureDegree.textContent = temperature;
+                        temperatureDescription.textContent = summary;
+                        locationTimezone.textContent = data.sys.country
+                        setPic(weatherName)
+                        //set Icon
+                        // setIcons(icon, )
+                    });
 
-            fetch(forcastApi)
-                .then(response => {
-                    return response.json();
-                })
-                .then(data => {
-                    console.log(data)
-                });
-        });
+                fetch(forcastApi)
+                    .then(response => {
+                        return response.json();
+                    })
+                    .then(data => {
+                        console.log(data)
+                    });
+            });
+        }
     }
 
     function seticons(icon, iconId) {
@@ -82,4 +81,5 @@ window.addEventListener('load', () => {
         iconElement.play()
         return iconElement.set(iconID, iconElement[currentIcon])
     }
+    getWeather();
 });
