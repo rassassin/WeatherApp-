@@ -1,4 +1,4 @@
-const apiKey = "2ee3795c8c769b0944596694d6169efd";
+const apiKey = "5b823175756edca6881486f2a5b1816b";
 const pics = {
   snow: "https://images.unsplash.com/photo-1457269449834-928af64c684d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1567&q=80",
   rain: "https://images.unsplash.com/photo-1428592953211-077101b2021b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1567&q=80",
