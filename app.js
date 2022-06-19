@@ -74,10 +74,8 @@ window.addEventListener("load", () => {
             //set DOM Elements from the API
             temperatureDegree.textContent = temperature;
             temperatureDescription.textContent = summary;
-            locationTimezone.textContent = data.sys.country;
+            locationTimezone.textContent = `${locationName} ${data.sys.country}`;
             setPic(weatherName);
-            //set Icon
-            // setIcons(icon, )
           });
 
         fetch(forcastApi)
@@ -85,7 +83,6 @@ window.addEventListener("load", () => {
             return response.json();
           })
           .then((data) => {
-            console.log(data);
             var iconData = [];
             for (let i = 0; i < data.list.length; i++) {
               if (i == 0) {
@@ -99,22 +96,12 @@ window.addEventListener("load", () => {
                 break;
               }
             }
-            console.log(iconData);
             for (let i = 0; i < 5; i++) {
-              days[i].textContent += ` ${iconData[i].main.feels_like}`;
+              days[i].textContent += ` ${iconData[i].main.feels_like} °C`;
             }
           });
       });
     }
-  }
-
-  function seticons(icon, iconId) {
-    const weatherIcons = new weatherIcons({
-      color: white,
-    });
-    const currentIcon = icon.replace(/-/g, "_").toUpperCase();
-    iconElement.play();
-    return iconElement.set(iconID, iconElement[currentIcon]);
   }
   getWeather();
 });
